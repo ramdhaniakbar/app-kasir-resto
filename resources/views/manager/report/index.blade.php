@@ -13,14 +13,27 @@
    {{ session ('danger') }}
 </div>
 @endif
+
 <div class="card">
    <div class="card-body">
       <h4 class="card-title">All Report</h4>
-      <a href=""><button type="button" class="btn btn-danger btn-icon-text"> Print PDF <i
-            class="mdi mdi-printer btn-icon-append"></i>
+      <a href="" class=""><button type="button" class="btn btn-danger btn-icon-text float-right"> Print PDF <i
+         class="mdi mdi-printer btn-icon-append"></i>
       </button></a>
+
+      <form class="form-inline">
+         <label class="form-label">Filter Data: </label>
+         <div class="col-md-8">
+            <label class="sr-only" for="inputDate1">Date 1</label>
+            <input type="date" name="date_1" class="form-control mb-2 mr-sm-2" id="inputDate1"/>
+            <label class="sr-only" for="inputDate2">Username</label>
+            <input type="date" name="date_2" class="form-control mb-2 mr-sm-2" id="inputDate2"/>
+            <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-outline"></i>Filter</button>
+         </div>
+      </form>
+
       <div class="table-responsive mt-4">
-         <table class="table table-bordered">
+         <table class="table table-bordered mb-4">
             <thead>
                <tr>
                   <th>No</th>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Menu;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
@@ -69,9 +70,14 @@ class ManagerDashboardController extends Controller
         return redirect()->route('manager.index')->with('danger', 'Menu deleted successfully');
     }
 
-    public function managerReport()
+    public function managerReport(Request $request)
     {
-        $reports = Transaction::latest()->paginate(8);
+        $reports = Transaction::latest()->paginate(10);
+        
+        if ($request['date_1'] && $request['date_2']) {
+            $reports = Transaction::whereBetween('created_at', [$request['date_1'], $request['date_2']])
+            ->paginate(10)->withQueryString();
+        }
         return view('manager.report.index', compact('reports'));
     }
 }

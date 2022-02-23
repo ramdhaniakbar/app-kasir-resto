@@ -12,7 +12,7 @@ class KasirDashboardController extends Controller
 {
     public function kasirIndex()
     {
-        $transactions = Transaction::latest()->paginate(8);
+        $transactions = Transaction::latest()->paginate(10);
         return view('kasir.index', compact('transactions'));
     }
 
