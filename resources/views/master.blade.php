@@ -73,14 +73,6 @@
             @endif
 
             @if (auth()->user()->role == 'Manager')
-            {{-- <li class="menu-items nav-item">
-               <a class="nav-link" href="/manager/dashboard/">
-                  <span class="menu-icon">
-                     <i class="mdi mdi-book-multiple"></i>
-                  </span>
-                  <span class="menu-title">Menu's</span>
-               </a>
-            </li> --}}
             <li class="menu-items {{ request()->is('manager/dashboard') ? 'nav-item' : '' }}">
                <a class="nav-link" href="/manager/dashboard">
                   <span class="menu-icon">
@@ -97,14 +89,6 @@
                   <span class="menu-title" style="color: #fff;">Report</span>
                </a>
             </li>
-            {{-- <li class="menu-items nav-item">
-               <a class="nav-link" href="/manager/dashboard/report/">
-                  <span class="menu-icon">
-                     <i class="mdi mdi-library-books"></i>
-                  </span>
-                  <span class="menu-title">Reports</span>
-               </a>
-            </li> --}}
             @endif
 
             @if (auth()->user()->role == 'Kasir')
