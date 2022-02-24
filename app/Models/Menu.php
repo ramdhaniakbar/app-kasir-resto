@@ -16,6 +16,16 @@ class Menu extends Model
         'stock',
     ];
 
+    public function scopeSearch($query)
+    {
+        if (request('search')) {
+            return $query->where('menu_name', 'like', '%' . request('search') . '%')
+                        ->orWhere('price', 'like', '%' . request('search') . '%')
+                        ->orWhere('description', 'like', '%' . request('search') . '%')
+                        ->orWhere('stock', 'like', '%' . request('search') . '%');
+        }
+    }
+
     // public function transaction()
     // {
     //     return $this->hasMany(Transaction::class);

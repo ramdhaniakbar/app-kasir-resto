@@ -13,10 +13,13 @@
    {{ session ('danger') }}
 </div>
 @endif
+
 <div class="card">
    <div class="card-body">
       <h4 class="card-title">All Menu</h4>
-      <a href="{{ route('manager.create') }}"><button type="button" class="btn btn-primary btn-fw">Create Menu</button></a>
+      <a href="{{ route('manager.create') }}"><button type="button" class="btn btn-primary btn-fw">Create
+            Menu</button></a>
+      @if ($menus->count())
       <div class="table-responsive mt-4">
          <table class="table table-bordered">
             <thead>
@@ -50,6 +53,9 @@
             {{ $menus->links() }}
          </div>
       </div>
+      @else
+      <p class="text-center h4 mt-5 mb-3">No Menus Found</p>
+      @endif
    </div>
 </div>
 @endsection

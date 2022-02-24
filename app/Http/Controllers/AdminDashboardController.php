@@ -12,6 +12,9 @@ class AdminDashboardController extends Controller
     public function adminIndex()
     {
         $users = User::latest()->paginate(10);
+        if (request('search')) {
+            $users = User::latest()->search()->paginate(10);
+        }
         return view('admin.index', compact('users'));
     }
 
@@ -49,7 +52,7 @@ class AdminDashboardController extends Controller
             $data->role = $request->role;
             $data->save();
         }
-
+        
         return redirect()->route('admin.index')->with('success', 'User created successfully');
     }
 

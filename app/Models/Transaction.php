@@ -17,8 +17,14 @@ class Transaction extends Model
         'employee_name',
     ];
 
-    // public function menu()
-    // {
-    //     return $this->belongsTo(Menu::class);
-    // }
+    public function scopeSearch($query)
+    {
+        if (request('search')) {
+            return $query->where('customer_name', 'like', '%' . request('search') . '%')
+                        ->orWhere('menu_name', 'like', '%' . request('search') . '%')
+                        ->orWhere('qty', 'like', '%' . request('search') . '%')
+                        ->orWhere('total', 'like', '%' . request('search') . '%')
+                        ->orWhere('employee_name', 'like', '%' . request('search') . '%');
+        }
+    }
 }

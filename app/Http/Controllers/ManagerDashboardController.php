@@ -12,6 +12,9 @@ class ManagerDashboardController extends Controller
     public function managerIndex()
     {
         $menus = Menu::orderBy('menu_name', 'ASC')->paginate(10);
+        if (request('search')) {
+            $menus = Menu::latest()->search()->paginate(10);
+        }
         return view('manager.menu.index', compact('menus'));
     }
 
@@ -72,19 +75,21 @@ class ManagerDashboardController extends Controller
 
     public function managerReport(Request $request)
     {   
-        $date_1 = $request['date_1'];
-        $date_2 = $request['date_2'];
         if ($request['date_1'] && $request['date_2']) {
-            $reports = Transaction::whereBetween('created_at', [$date_1, $date_2])
+            $reports = Transaction::whereBetween('created_at', [$request['date_1'], $request['date_2']])
             ->paginate(10)->withQueryString();
         } elseif ($request['date_1']) {
-            $reports = Transaction::where('created_at', 'like', "%$date_1%")
+            $reports = Transaction::where('created_at', 'like', '%' . $request['date_1'] . '%')
             ->paginate(10)->withQueryString();
         } elseif ($request['date_2']) {
-            $reports = Transaction::where('created_at', 'like', "%$date_2%")
+            $reports = Transaction::where('created_at', 'like', '%' . $request['date_2'] . '%')
             ->paginate(10)->withQueryString();
         } else {
             $reports = Transaction::latest()->paginate(10);
+        }
+
+        if (request('search')) {
+            $reports = Transaction::latest()->search()->paginate(10);
         }
         return view('manager.report.index', compact('reports'));
     }

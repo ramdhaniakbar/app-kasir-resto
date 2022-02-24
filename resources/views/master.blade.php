@@ -134,9 +134,18 @@
                </button>
                <ul class="navbar-nav w-100">
                   <li class="nav-item w-100">
-                     <form class="nav-link mt-2 mt-md-0 d-none d-lg-flex search">
-                        <input type="text" class="form-control" placeholder="Search products">
-                     </form>
+                     @if (auth()->user()->role == 'Admin')
+                        @include('partials.user-search')
+                     @endif
+                     @if (auth()->user()->role == 'Manager' && request()->is('manager/dashboard'))
+                        @include('partials.menu-search')
+                     @endif
+                     @if (auth()->user()->role == 'Manager' && request()->is('manager/dashboard/report'))
+                        @include('partials.report-search')
+                     @endif
+                     @if (auth()->user()->role == 'Kasir')
+                        @include('partials.transaction-search')
+                     @endif
                   </li>
                </ul>
                <ul class="navbar-nav navbar-nav-right">
@@ -186,12 +195,6 @@
                               </div>
                            </div>
                            <div class="preview-item-content">
-                              {{-- <form action="/logout" method="get">
-                                 @csrf
-                                 <p class="preview-subject mb-1"><button type="submit"
-                                       style="border: none; background-color: transparent; color: white">Log
-                                       out</button></p>
-                              </form> --}}
                               <p class="preview-subject mb-1">Log out</p>
                            </div>
                         </a>
@@ -248,7 +251,6 @@
    <!-- endinject -->
    <!-- Custom js for this page -->
    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
-   {{-- @yield('custom-javascript') --}}
    <!-- End custom js for this page -->
 </body>
 

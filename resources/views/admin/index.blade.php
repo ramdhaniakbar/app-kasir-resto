@@ -17,6 +17,7 @@
       <div class="card-body">
          <h4 class="card-title">All User</h4>
          <a href="{{ route('admin.create') }}"><button type="button" class="btn btn-primary btn-fw">Create User</button></a>
+         @if ($users->count())   
          <div class="table-responsive mt-4">
             <table class="table table-bordered mb-4">
                <thead>
@@ -45,6 +46,9 @@
             </table>
             {{ $users->links() }}
          </div>
+         @else
+         <p class="text-center h4 mt-5 mb-3">No Users Found</p>
+         @endif
       </div>
    </div>
 @endsection

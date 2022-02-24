@@ -13,6 +13,9 @@ class KasirDashboardController extends Controller
     public function kasirIndex()
     {
         $transactions = Transaction::latest()->paginate(10);
+        if (request('search')) {
+            $transactions = Transaction::latest()->search()->paginate(10);
+        }
         return view('kasir.index', compact('transactions'));
     }
 

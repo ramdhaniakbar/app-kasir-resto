@@ -17,7 +17,6 @@
 <div class="card">
    <div class="card-body">
       <h4 class="card-title">All Report</h4>
-
       <form class="form-inline">
          <label class="form-label">Filter Data: </label>
          <div class="col-md-8">
@@ -28,7 +27,7 @@
             <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-outline"></i>Filter</button>
          </div>
       </form>
-
+      @if ($reports->count())
       <div class="table-responsive mt-4">
          <table class="table table-bordered mb-4">
             <thead>
@@ -58,6 +57,9 @@
          </table>
          {{ $reports->links() }}
       </div>
+      @else
+      <p class="text-center h4 mt-5 mb-3">No Reports Found</p>
+      @endif
    </div>
 </div>
 @endsection
