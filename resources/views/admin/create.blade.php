@@ -27,8 +27,12 @@
                @enderror
             </div>
             <div class="form-group">
-               <label for="inputPassword">Password</label>
-               <input type="password" class="form-control @error('password') is-invalid @enderror" id="inputPassword" name="password" placeholder="Password">
+               <label for="password">Password</label>
+               <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
+               <i class="bi bi-eye" id="hide" onclick="password()"
+                  style="position: absolute; right: 4%; top: 47%; cursor: pointer;"></i>
+               <i class="bi bi-eye-slash" id="show" onclick="password()"
+                  style="position: absolute; right: 4%; top: 47%; cursor: pointer;"></i>
                @error('password')
                <span style="color: rgb(255, 71, 71);">{{ $message }}</span>
                @enderror
@@ -41,9 +45,6 @@
                @enderror
             </div>
             <div class="form-group">
-               {{-- <label for="inputRole">Role</label>
-               <input type="text" class="form-control @error('role') is-invalid @enderror" id="inputRole" name="role"
-                  placeholder="Role"> --}}
                <label for="selectRole">Role</label>
                <select name="role" class="form-control" id="selectRole">
                   <option value="Admin">Admin</option>
@@ -56,4 +57,20 @@
       </div>
    </div>
 </div>
+@endsection
+@section('cjs')
+   <script>
+      function password() {
+      var x = document.getElementById('password');
+      if (x.type === 'password') {
+         x.type = 'text';
+         document.getElementById('hide').style.display = 'inline-block';
+         document.getElementById('show').style.display = 'none';
+      } else {
+         x.type = 'password';
+         document.getElementById('hide').style.display = 'none';
+         document.getElementById('show').style.display = 'inline-block';
+      }
+      }
+   </script>
 @endsection

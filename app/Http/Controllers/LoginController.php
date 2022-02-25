@@ -39,6 +39,8 @@ class LoginController extends Controller
     public function logout() 
     {
         Auth::logout();
+        request()->session()->invalidate();
+        request()->session()->regenerate();
         return redirect()->route('login')->with('danger', 'You are logged out');
     }
 }

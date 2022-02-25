@@ -43,6 +43,9 @@
                            <label for="password">Password </label>
                            <input type="password" class="form-control p_input" id="password" name="password">
                         </div>
+                        <div class="form-group">
+                           <input type="checkbox" id="toggle-password"> <span style="font-size: 14px;">Show Password</span>
+                        </div>
                         <div class="text-center mt-5">
                            <button type="submit" class="btn btn-primary btn-block enter-btn">Login</button>
                         </div>
@@ -68,6 +71,22 @@
    <script src="{{ asset('../../assets/js/misc.js') }}"></script>
    <script src="{{ asset('../../assets/js/settings.js') }}"></script>
    <script src="{{ asset('../../assets/js/todolist.js') }}"></script>
+
+   {{-- custom function --}}
+   <script>
+      const password = document.getElementById('password');
+      const togglePassword = document.getElementById('toggle-password');
+
+      togglePassword.addEventListener("click", toggleClicked);
+
+      function toggleClicked() {
+         if (this.checked) {
+         password.type = "text";
+         } else {
+         password.type = "password";
+         }
+      }
+   </script>
    <!-- endinject -->
 </body>
 

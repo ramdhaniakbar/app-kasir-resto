@@ -235,6 +235,8 @@
    <!-- endinject -->
    <!-- Custom js for this page -->
    <script src="{{ asset('assets/js/dashboard.js') }}"></script>
+   @yield('show-password')
+   @yield('cjs')
    <!-- End custom js for this page -->
 </body>
 

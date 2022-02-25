@@ -50,7 +50,7 @@
                   <td>{{ $report->qty }}</td>
                   <td>{{ 'Rp ' . number_format($report->total) }}</td>
                   <td>{{ $report->employee_name }}</td>
-                  <td>{{ $report->created_at->diffForHumans() }}</td>
+                  <td>{{ date('d-m-Y', strtotime($report->created_at)) }}</td>
                </tr>
                @endforeach
             </tbody>
