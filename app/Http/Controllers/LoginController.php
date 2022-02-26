@@ -20,7 +20,7 @@ class LoginController extends Controller
     {
         $validatedData = $request->validate([
             'username' => 'required',
-            'password' => 'required',
+            'password' => 'required|min:8',
         ]);
         $user = Auth::attempt($validatedData);
         if (!$user) {

@@ -37,11 +37,17 @@
                         @csrf
                         <div class="form-group">
                            <label for="username">Username </label>
-                           <input type="text" class="form-control p_input" id="username" name="username">
+                           <input type="text" class="form-control p_input @error('username') is-invalid @enderror" id="username" name="username">
+                           @error('username')
+                           <span style="color: rgb(255, 71, 71);">{{ $message }}</span>
+                           @enderror
                         </div>
                         <div class="form-group">
                            <label for="password">Password </label>
-                           <input type="password" class="form-control p_input" id="password" name="password">
+                           <input type="password" class="form-control p_input @error('password') is-invalid @enderror" id="password" name="password">
+                           @error('password')
+                           <span style="color: rgb(255, 71, 71);">{{ $message }}</span>
+                           @enderror
                         </div>
                         <div class="form-group">
                            <input type="checkbox" id="toggle-password"> <span style="font-size: 14px;">Show Password</span>
