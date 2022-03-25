@@ -12,6 +12,7 @@
          <h4 class="card-title">Update user</h4>
          <form class="forms-sample" action="/admin/dashboard/update/{{ $users->id }}" method="post">
             @csrf
+            <input type="hidden" class="form-control" name="password" value="{{ $users->password }}">
             <div class="form-group">
                <label for="inputName">Name</label>
                <input type="text" class="form-control @error('name') is-invalid @enderror" id="inputName" name="name"
@@ -25,14 +26,6 @@
                <input type="text" class="form-control @error('username') is-invalid @enderror" id="inputUsername"
                   name="username" placeholder="Username" value="{{ $users->username }}">
                @error('username')
-               <span class="text-red">{{ $message }}</span>
-               @enderror
-            </div>
-            <div class="form-group">
-               <label for="inputPassword">Password</label>
-               <input type="password" class="form-control @error('password') is-invalid @enderror" id="inputPassword"
-                  name="password" placeholder="Password" value="{{ $users->password }}">
-               @error('password')
                <span class="text-red">{{ $message }}</span>
                @enderror
             </div>

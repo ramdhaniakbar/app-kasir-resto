@@ -28,6 +28,8 @@ Route::get('/login', [LoginController::class, 'index'])->name('login');
 Route::post('/login', [LoginController::class, 'authentication']);
 Route::get('/logout', [LoginController::class, 'logout']);
 
+Route::post('/cari-menu', [KasirDashboardController::class, 'cariMenu']);
+
 Route::middleware('islogin')->group( function () {
 
     // Route profile
@@ -59,6 +61,7 @@ Route::middleware('islogin')->group( function () {
 
         // Report pages
         Route::get('/manager/dashboard/report', [ManagerDashboardController::class, 'managerReport'])->name('manager.report');
+        Route::get('/manager/dashboard/export-pdf', [ManagerDashboardController::class, 'exportPDF']);
     });
 
     // Route kasir dashboard

@@ -28,17 +28,33 @@
             </div>
             <div class="form-group">
                <label for="selectMenu">Menu</label>
-               <select name="menu_name" class="form-control" id="selectMenu">
+               <select name="menu_name" class="form-control" id="selectMenu" onchange="getHarga($(this).val())">
                @foreach ($menus as $menu)
-                  <option value="{{ $menu }}">{{ $menu }}</option>
+                  <option value="{{ $menu->menu_name }}">{{ $menu->menu_name }} - (Stock : {{ $menu->stock }})</option>
                @endforeach
                </select>
             </div>
             <div class="form-group">
+               <label for="harga">Harga</label>
+               <input type="text" class="form-control @error('harga') is-invalid @enderror" id="harga" name="harga"
+                  placeholder="Harga" disabled style="color: #000">
+               @error('harga')
+               <span class="text-red">{{ $message }}</span>
+               @enderror
+            </div>
+            <div class="form-group">
                <label for="inputQty">Quantity</label>
                <input type="number" class="form-control @error('qty') is-invalid @enderror" id="inputQty"
-                  name="qty" placeholder="Quantity">
+                  name="qty" min="1" placeholder="Quantity" onkeyup="getTotalHarga($(this).val())" onchange="getTotalHarga($(this).val())">
                @error('qty')
+               <span class="text-red">{{ $message }}</span>
+               @enderror
+            </div>
+            <div class="form-group">
+               <label for="inputTotalHarga">Total Harga</label>
+               <input type="text" class="form-control @error('total_harga') is-invalid @enderror" id="inputTotalHarga"
+                  name="total_harga" placeholder="Total Harga" disabled style="color: #000">
+               @error('total_harga')
                <span class="text-red">{{ $message }}</span>
                @enderror
             </div>
@@ -47,4 +63,49 @@
       </div>
    </div>
 </div>
+@endsection
+@section('cjs')
+   <script>
+      function getHarga(menu_name) {
+         $.ajax({
+            url: '/cari-menu',
+            data: {
+               _token: "{{ csrf_token() }}",
+               menu_name
+            },
+            type: 'POST', 
+            success: (menu) => {
+               // console.log(menu);
+               $('#harga').val(menu.price_rp)
+            },
+            error: (error) => {
+               console.log(error);
+            }
+         })
+      }
+
+      function getTotalHarga(qty) {
+         const hargaMenu = $('#harga').val().replace('Rp ', '').replace('.', '')
+         var totalHarga = hargaMenu * qty;
+         $('#inputTotalHarga').val(totalHarga);
+         $('#inputTotalHarga').val(formatRupiah($('#inputTotalHarga').val(), 'Rp '));
+      }
+
+      function formatRupiah(angka, prefix){
+         var number_string = angka.replace(/[^,\d]/g, '').toString(),
+         split = number_string.split(','),
+         sisa = split[0].length % 3,
+         rupiah = split[0].substr(0, sisa),
+         ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+         
+         // tambahkan titik jika yang di input sudah menjadi angka ribuan
+         if(ribuan){
+            separator = sisa ? '.' : '';
+            rupiah += separator + ribuan.join(',');
+         }
+         
+         rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+         return prefix == undefined ? rupiah : (rupiah ? 'Rp ' + rupiah : '');
+      }
+   </script>
 @endsection

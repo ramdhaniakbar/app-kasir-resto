@@ -38,7 +38,7 @@
                   <td>{{ $transaction->customer_name }}</td>
                   <td>{{ $transaction->menu_name }}</td>
                   <td>{{ $transaction->qty }}</td>
-                  <td>{{ 'Rp ' . number_format($transaction->total) }}</td>
+                  <td>{{ 'Rp ' . number_format($transaction->total, 0,'.', '.') }}</td>
                   <td>{{ $transaction->employee_name }}</td>
                   <td>
                      <a href="/kasir/dashboard/edit/{{ $transaction->id }}"><button type="button"

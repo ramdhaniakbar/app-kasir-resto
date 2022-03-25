@@ -4,8 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Models\Menu;
+use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Transaction;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class ManagerDashboardController extends Controller
 {
@@ -75,22 +78,38 @@ class ManagerDashboardController extends Controller
 
     public function managerReport(Request $request)
     {   
-        if ($request['date_1'] && $request['date_2']) {
+        $reports = Transaction::latest()->paginate(10);
+
+        if ($request['date_1'] || $request['date_2']) {
             $reports = Transaction::whereBetween('created_at', [$request['date_1'], $request['date_2']])
             ->paginate(10)->withQueryString();
-        } elseif ($request['date_1']) {
-            $reports = Transaction::where('created_at', 'like', '%' . $request['date_1'] . '%')
-            ->paginate(10)->withQueryString();
-        } elseif ($request['date_2']) {
-            $reports = Transaction::where('created_at', 'like', '%' . $request['date_2'] . '%')
-            ->paginate(10)->withQueryString();
-        } else {
-            $reports = Transaction::latest()->paginate(10);
         }
+
+        Session::put('transactions', $reports);
 
         if (request('search')) {
             $reports = Transaction::latest()->search()->paginate(10);
         }
         return view('manager.report.index', compact('reports'));
+    }
+
+    public function exportPDF(Request $request)
+    {
+        $employee = auth()->user()->name;
+        $role = auth()->user()->role;
+        $data_transactions = Session::get('transactions');
+
+        if ($request['all_data'] == true) {
+            $data_transactions = Transaction::all();
+        }
+
+        $data = [
+            'employee' => $employee,
+            'role' => $role,
+            'transactions' => $data_transactions,
+        ];
+
+        $pdf = PDF::loadView('manager.report.pdf-report', $data);
+        return $pdf->download(Str::random(20) . '.pdf');
     }
 }

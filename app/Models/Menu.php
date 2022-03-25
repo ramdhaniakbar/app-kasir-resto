@@ -16,6 +16,15 @@ class Menu extends Model
         'stock',
     ];
 
+    protected $appends = [
+        'price_rp',
+    ];
+
+    public function getPriceRpAttribute()
+    {
+        return 'Rp ' . number_format($this->price, 0,'.','.');
+    }
+
     public function scopeSearch($query)
     {
         if (request('search')) {

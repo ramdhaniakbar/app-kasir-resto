@@ -26,6 +26,12 @@
             <input type="date" name="date_2" class="form-control mb-2 mr-sm-2" id="inputDate2"/>
             <button type="submit" class="btn btn-primary"><i class="mdi mdi-filter-outline"></i>Filter</button>
          </div>
+         @if (request()->has('date_1') || request()->has('date_2'))
+            <a href="/manager/dashboard/export-pdf" class="btn btn-danger" style="position: absolute; right: 35px;"><i
+                  class="bi bi-printer"></i> Export PDF</a>
+         @else
+            <a href="/manager/dashboard/export-pdf?all_data=true" class="btn btn-danger" style="position: absolute; right: 35px;"><i class="bi bi-printer"></i> Export PDF</a>
+         @endif
       </form>
       @if ($reports->count())
       <div class="table-responsive mt-4">
@@ -42,9 +48,9 @@
                </tr>
             </thead>
             <tbody>
-               @foreach ($reports as $report)
+               @foreach ($reports as $key => $report)
                <tr>
-                  <td>{{ $reports->firstItem() + $loop->index }}</td>
+                  <td>{{ $reports->firstItem() + $key }}</td>
                   <td>{{ $report->customer_name }}</td>
                   <td>{{ $report->menu_name }}</td>
                   <td>{{ $report->qty }}</td>

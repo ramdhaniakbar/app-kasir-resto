@@ -37,7 +37,7 @@
                         @csrf
                         <div class="form-group">
                            <label for="username">Username </label>
-                           <input type="text" class="form-control p_input @error('username') is-invalid @enderror" id="username" name="username">
+                           <input type="text" class="form-control p_input @error('username') is-invalid @enderror" id="username" name="username" autocomplete="off">
                            @error('username')
                            <span style="color: rgb(255, 71, 71);">{{ $message }}</span>
                            @enderror

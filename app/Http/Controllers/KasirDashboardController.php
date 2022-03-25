@@ -21,7 +21,7 @@ class KasirDashboardController extends Controller
 
     public function kasirCreate()
     {
-        $menus = Menu::orderBy('menu_name', 'ASC')->pluck('menu_name');
+        $menus = Menu::orderBy('menu_name', 'ASC')->get();
         return view('kasir.create', compact('menus'));
     }
 
@@ -59,7 +59,10 @@ class KasirDashboardController extends Controller
     {
         $transactions = Transaction::find($id);
         $menus = Menu::orderBy('menu_name', 'ASC')->pluck('menu_name');
-        return view('kasir.edit', compact('transactions', 'menus'));
+        return view('kasir.edit', [
+            'transactions' => $transactions,
+            'menus' => $menus,
+        ]);
     }
 
     public function kasirUpdate(Request $request, $id)
@@ -87,10 +90,10 @@ class KasirDashboardController extends Controller
                 $data->total = $getTotal;
                 $data->employee_name = Auth::user()->name;
                 $data->update();
-
+                
                 $updateMenu = Menu::where('menu_name', $request->menu_name)
                     ->update(['stock' => $updateStock1]);
-
+                
                 return redirect()->route('kasir.index')->with('success', 'Transaction successfully updated');
             }
         } else {
@@ -120,5 +123,11 @@ class KasirDashboardController extends Controller
     {
         Transaction::find($id)->delete();
         return back()->with('danger', 'Transaction successfully deleted');
+    }
+
+    public function cariMenu(Request $request)
+    {
+        $menu = Menu::where('menu_name', 'LIKE', '%' . $request->menu_name . '%')->firstOrFail();
+        return $menu;
     }
 }

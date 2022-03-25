@@ -67,7 +67,7 @@ class AdminDashboardController extends Controller
         $validated = $request->validate([
             'name' => 'required|max:100',
             'username' => 'required',
-            'password' => 'required|min:8',
+            'password' => 'required',
         ]);
 
         $update = User::find($id);
