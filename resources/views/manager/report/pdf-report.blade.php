@@ -7,7 +7,8 @@
    <title>PDF Report</title>
 </head>
 <body>
-   <h1>Ini export pdf</h1>
+   <h3>Printer by {{ $employee }}</h3>
+   <h4>Role : {{ $role }}</h4>
    <table border="1" cellspacing="0" cellpadding="2">
       <thead>
          <tr>
@@ -27,9 +28,9 @@
             <td>{{ $transaction->customer_name }}</td>
             <td>{{ $transaction->menu_name }}</td>
             <td>{{ $transaction->qty }}</td>
-            <td>{{ $transaction->total }}</td>
-            <td>{{ $employee }}</td>
-            <td>{{ $transaction->created_at }}</td>
+            <td>{{ 'Rp ' . number_format($transaction->total, 0,'.','.') }}</td>
+            <td>{{ $transaction->employee_name }}</td>
+            <td>{{ date('d-m-Y', strtotime($transaction->created_at)) }}</td>
          </tr>
          @endforeach
       </tbody>
