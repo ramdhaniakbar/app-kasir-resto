@@ -42,7 +42,14 @@ class UserSeeder extends Seeder
                 'password' => bcrypt('eren@123'),
                 'profile_image' => null,
                 'role' => 'Admin',
-            ]
+            ],
+            [
+                'name' => 'fjkladflka',
+                'username' => 'mikasa',
+                'password' => bcrypt('mikasa@123'),
+                'profile_image' => null,
+                'role' => 'Kasir',
+            ],
         ];
 
         foreach ($users as $user) {
